@@ -19,12 +19,14 @@ library(microbenchmark)
 #factorial of an integer using looping (such as a for loop)
 
 factorial_loop <- function(x) {
+  
+  x<-as.numeric(x)
   if (x == 0 || x == 1)
     return(1)
   for (i in (x - 1):1) {
     x <- x * i
   }
-  x
+  return(as.numeric(x))
 }
 #2#Factorial_reduce: a version that computes the factorial using the reduce() 
 #function in the purrr package. 
@@ -72,7 +74,7 @@ factorial_mem <- function(x) {
 # functions for specific inputs, make sure to show a range of inputs in order 
 # to demonstrate the timing of each function for larger inputs.
 
-inputs <- c(0, 1,4,7,10,15,25,50,75,100,150)
+inputs <- c(0, 10,50,100)
 
 # Check if all functions produce the same results
 
@@ -88,8 +90,8 @@ map_dbl(inputs, factorial_mem)
 
 
 # Reset lookup table for comparing purposes
-fact_tbl <- c(rep(NA, 100000))
-
+fact_tbl <- c(rep(NA, 100))
+fact_tbl<- cbind(1:100,sapply(c(1:100),factorial_loop))
 
 # Calculate and compare perforamnce of individual input values
 results <- map(inputs, ~ microbenchmark(
@@ -103,7 +105,19 @@ names(results) <- as.character(inputs)
 results
 
 
-
+library(microbenchmark)
+microbenchmark(factorial_loop(10),
+               factorial_reduce(10),
+               factorial_func(10),
+               factorial_mem(10),
+               factorial_loop(50),
+               factorial_reduce(50),
+               factorial_func(50),
+               factorial_mem(50),
+               factorial_loop(100),
+               factorial_reduce(100),
+               factorial_func(100),
+               factorial_mem(100))
 
 
 
