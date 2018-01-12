@@ -105,19 +105,8 @@ names(results) <- as.character(inputs)
 results
 
 
-library(microbenchmark)
-microbenchmark(factorial_loop(10),
-               factorial_reduce(10),
-               factorial_func(10),
-               factorial_mem(10),
-               factorial_loop(50),
-               factorial_reduce(50),
-               factorial_func(50),
-               factorial_mem(50),
-               factorial_loop(100),
-               factorial_reduce(100),
-               factorial_func(100),
-               factorial_mem(100))
+
+
 
 
 
