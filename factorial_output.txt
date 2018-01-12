@@ -1,57 +1,32 @@
-> inputs <- c(0, 1,4,7,10)
-> map_dbl(inputs, factorial_loop)
-[1]       1       1      24    5040 3628800
-> map_dbl(inputs, factorial_reduce)
-[1]       1       1      24    5040 3628800
-> map_dbl(inputs, factorial_func)
-[1]       1       1      24    5040 3628800
-> map_dbl(inputs, factorial_mem)
-[1]       1       1      24    5040 3628800
-> fact_tbl <- c(rep(NA, 10))
-> results <- map(inputs, ~ microbenchmark(
-+   factorial_loop(.),
-+   factorial_reduce(.),
-+   factorial_func(.),
-+   factorial_mem(.)
-+ ))
-> names(results) <- as.character(inputs)
-> results
 $`0`
 Unit: nanoseconds
-                expr min lq   mean median  uq   max neval cld
-   factorial_loop(.)   0  1 328.37      1 395 16185   100   a
- factorial_reduce(.)   0  1 158.66      1 395  1975   100   a
-   factorial_func(.)   0  1 150.83      1 395  1580   100   a
-    factorial_mem(.)   0  1 194.11      1 395  1974   100   a
-
-$`1`
-Unit: nanoseconds
-                expr    min     lq      mean median       uq    max neval cld
-   factorial_loop(.)      0    395    596.87    396    790.0   9475   100  a 
- factorial_reduce(.) 110926 113294 120178.76 114479 117636.5 286590   100   b
-   factorial_func(.)    395    790   1023.14    791   1185.0   3159   100  a 
-    factorial_mem(.)   1185   1580   2902.21   2764   3553.0  28423   100  a 
-
-$`4`
-Unit: nanoseconds
-                expr    min     lq      mean   median       uq    max neval cld
-   factorial_loop(.)    395    791   1516.61   1579.0   1974.0   6711   100 a  
- factorial_reduce(.) 123953 126124 143737.46 129084.5 144282.0 421595   100   c
-   factorial_func(.)   1974   2369   3229.83   2764.0   3553.0  21317   100 ab 
-    factorial_mem(.)   5132   5922   8570.80   7896.0   8882.5  46581   100  b 
-
-$`7`
-Unit: nanoseconds
-                expr    min     lq      mean median     uq    max neval cld
-   factorial_loop(.)    395    790   1374.49   1185   1580   9870   100 a  
- factorial_reduce(.) 115269 118426 128977.78 120202 129084 285406   100   c
-   factorial_func(.)   3158   3553   3956.21   3948   4343   7501   100 a  
-    factorial_mem(.)   7501   8685  10339.23   9672  11054  35528   100  b 
+expr min  lq   mean median  uq   max neval cld
+factorial_loop(.)   0 395 399.46    396 396  3948   100   a
+factorial_reduce(.)   0 395 561.24    395 396 17765   100   a
+factorial_func(.)   0   1 257.40    395 396  2369   100   a
+factorial_mem(.)   0 395 399.53    396 396  2369   100   a
 
 $`10`
 Unit: nanoseconds
-                expr    min     lq      mean median       uq    max neval cld
-   factorial_loop(.)    395   1185   1556.06   1579   1974.0  11054   100 a  
- factorial_reduce(.) 116847 121387 134922.69 128295 140729.5 329617   100   c
-   factorial_func(.)   4343   5133   5914.06   5922   6316.5  14607   100 a  
-    factorial_mem(.)  11053  13027  14618.43  14212  15396.0  25660   100  b 
+expr    min     lq      mean median       uq    max neval cld
+factorial_loop(.)    790   1185   1721.80   1580   1975.0   4738   100  a 
+factorial_reduce(.) 123558 127505 141656.65 129873 135794.5 338301   100   b
+factorial_func(.)   4343   4935   5602.24   5527   5922.0  16185   100  a 
+factorial_mem(.)    790   1185   2302.12   2369   2764.0  15396   100  a 
+
+$`50`
+Unit: microseconds
+expr     min       lq      mean  median       uq     max neval cld
+factorial_loop(.)   2.764   3.1585   3.76664   3.553   3.9480  24.475   100 a  
+factorial_reduce(.) 157.506 171.3225 179.07899 175.664 179.2170 378.171   100   c
+factorial_func(.)  22.896  26.0545  28.15819  27.238  29.0145  76.977   100  b 
+factorial_mem(.)   1.185   1.5800   2.81137   2.369   3.1590  22.106   100 a  
+
+$`100`
+Unit: microseconds
+expr     min       lq      mean   median      uq     max neval cld
+factorial_loop(.)   4.737   5.5270   6.17470   6.1190   6.712  11.843   100 a  
+factorial_reduce(.) 196.981 215.9285 236.81107 222.0475 240.403 535.281   100   c
+factorial_func(.)  49.739  56.4500  60.95403  58.2260  61.582 129.084   100  b 
+factorial_mem(.)   1.185   1.5800   3.23766   3.1585   3.751  24.870   100 a  
+
